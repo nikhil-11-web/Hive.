@@ -1,5 +1,3 @@
-// src/Data/currentUser.js
-
 export const currentUser = {
   name: "Nikhil Tomar",
   username: "@its-tha-kur-00",

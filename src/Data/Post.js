@@ -77,7 +77,6 @@ export const postsData = [
     isLiked: false,
     isSaved: true
   },
-  // --- 20 New Data Entries Below ---
   {
     id: 7,
     username: "foodie_traveler",

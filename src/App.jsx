@@ -19,38 +19,32 @@ import MoreSection from "./components/MoreSection";
 import ReelSection from "./components/ReelSection"; 
 import AboutHive from "./components/AboutHive"; 
 
-// --- DATA IMPORTS ---
-import { currentUser } from './Data/currentUser';
-import { postsData } from './Data/post'; // Ensure this path is correct
+// --- FIXED DATA IMPORTS (Use lowercase 'data' folder) ---
+import { currentUser } from "./data/currentUser.jx";
+import { postsData } from "./data/Post.jx";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [theme, setTheme] = useState('dark'); // Default Dark for Premium feel
+  const [theme, setTheme] = useState('dark'); 
   const [currentView, setCurrentView] = useState('home'); 
 
-  // --- SAVE LOGIC (Global State) ---
+  // --- SAVE LOGIC ---
   const [savedPosts, setSavedPosts] = useState([]);
 
   const handleToggleSave = (post) => {
     setSavedPosts((prev) => {
       const exists = prev.some((p) => p.id === post.id);
       if (exists) {
-        return prev.filter((p) => p.id !== post.id); // Remove if exists
+        return prev.filter((p) => p.id !== post.id); 
       }
-      return [...prev, post]; // Add if not exists
+      return [...prev, post]; 
     });
   };
 
   // --- MODAL STATES ---
   const [modals, setModals] = useState({
-    chat: false,
-    activity: false,
-    search: false,
-    create: false,
-    menu: false,
-    settings: false,
-    more: false,
-    about: false
+    chat: false, activity: false, search: false, create: false,
+    menu: false, settings: false, more: false, about: false
   });
 
   const closeAll = () => {
@@ -65,7 +59,7 @@ function App() {
     setModals(prev => ({ ...prev, [name]: true }));
   };
 
-  // --- NAVIGATION HANDLERS ---
+  // --- NAVIGATION ---
   const navigateTo = (view) => { closeAll(); setCurrentView(view); };
   const toggleTheme = () => { setTheme((prev) => (prev === 'dark' ? 'light' : 'dark')); };
 
@@ -74,7 +68,7 @@ function App() {
   return (
     <div className={`min-h-screen font-sans transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'bg-[#050505] text-slate-200' : 'bg-fuchsia-50 text-slate-900'}`}>
       
-      {/* HEADER (Mobile Only) */}
+      {/* HEADER */}
       <Header 
         currentUser={currentUser} 
         onOpenChat={() => toggleModal('chat')} 
@@ -85,7 +79,7 @@ function App() {
         theme={theme} 
       />
 
-      {/* LEFT SIDEBAR (Desktop/Tablet) */}
+      {/* LEFT SIDEBAR */}
       <LeftSidebar 
         currentUser={currentUser}
         onOpenChat={() => toggleModal('chat')} 
@@ -103,7 +97,7 @@ function App() {
         theme={theme} 
       />
 
-      {/* MAIN CONTENT AREA */}
+      {/* MAIN CONTENT */}
       <main className="w-full max-w-[1400px] mx-auto pt-20 md:pt-8 md:pl-[90px] lg:pl-[280px] transition-all duration-300">
         
         {currentView === 'home' && (
@@ -118,7 +112,6 @@ function App() {
                       key={post.id} 
                       {...post} 
                       theme={theme}
-                      // Pass actual save state
                       isSavedExternal={savedPosts.some(p => p.id === post.id)}
                       onToggleSave={() => handleToggleSave(post)}
                     />
@@ -126,7 +119,7 @@ function App() {
                 </div>
               </div>
 
-              {/* RIGHT SIDEBAR (Desktop Only) */}
+              {/* RIGHT SIDEBAR */}
               <div className="hidden xl:block w-[350px] pt-4 mr-8">
                   <Sidebar theme={theme} currentUser={currentUser} onNavigateProfile={() => navigateTo('profile')} />
               </div>
@@ -140,7 +133,7 @@ function App() {
             theme={theme} 
             savedPosts={savedPosts} 
             user={currentUser} 
-            allPosts={postsData} // Pass all posts so we can show "My Posts"
+            allPosts={postsdata} 
           />
         )}
 
@@ -151,7 +144,7 @@ function App() {
         )}
       </main>
 
-      {/* MODALS RENDERED HERE */}
+      {/* MODALS */}
       {modals.chat && <ChatSection onClose={closeAll} theme={theme} />}
       {modals.activity && <ActivitySection onClose={closeAll} theme={theme} />}
       {modals.search && <SearchSection onClose={closeAll} theme={theme} />}
@@ -172,7 +165,6 @@ function App() {
           currentTheme={theme} 
         />
       )}
-    
     </div>
   );
 }
