@@ -20,8 +20,8 @@ import ReelSection from "./components/ReelSection";
 import AboutHive from "./components/AboutHive"; 
 
 // --- FIXED DATA IMPORTS (Use lowercase 'data' folder) ---
-import { currentUser } from "./data/currentUser.jx";
-import { postsData } from "./data/Post.jx";
+import { currentUser } from "./data/currentUser.js";
+import { postsData } from "./data/posts.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
