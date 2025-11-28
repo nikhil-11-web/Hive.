@@ -21,8 +21,8 @@ import AboutHive from "./components/AboutHive";
 
 // --- FIXED DATA IMPORTS ---
 // Ensure the files in your /src/data/ folder are actually named 'currentUser.js' and 'posts.js'
-import { currentUser } from "./data-temp/currentUser.js";
-import { postsData } from "./data-temp/posts.js";
+import { currentUser } from "./data/currentUser.js";
+import { postsData } from "./data/posts.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
