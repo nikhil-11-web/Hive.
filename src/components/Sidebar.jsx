@@ -2,7 +2,7 @@ import { useRef, useState, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import React from 'react';
 import { Verified, TrendingUp, Sparkles } from 'lucide-react'; // Added Icons for premium feel
-import { currentUser } from '../Data/currentUser';
+import { currentUser } from '../data-temp/currentUser';
 
 // Suggestion Data
 const suggestions = [
