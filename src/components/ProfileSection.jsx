@@ -1,17 +1,22 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom'; 
 import { Settings, Grid, Bookmark, UserSquare2, MapPin, Link as LinkIcon, Heart, MessageCircle, X, MoreHorizontal } from 'lucide-react';
 import gsap from 'gsap';
 
-const ProfileSection = ({ user, savedPosts, allPosts, theme }) => {
+// ✅ FIXED: Added default values (= []) to props to prevent crashes if data is missing
+const ProfileSection = ({ user, savedPosts = [], allPosts = [], theme }) => {
   const containerRef = useRef(null);
   const [activeTab, setActiveTab] = useState('posts');
   const [selectedPost, setSelectedPost] = useState(null);
 
+  // ✅ SAFETY CHECK: If user data hasn't loaded yet, don't render to avoid errors
+  if (!user) return <div className="p-20 text-center opacity-50">Loading profile...</div>;
+
   // Filter Logic
-  // 1. My Posts (Simulated by taking first 6 from allPosts for demo, or match ID)
-  const myPosts = allPosts.slice(0, 9); 
-  // 2. Saved Posts (Passed from App.js)
+  // 1. My Posts (Safely slice the array)
+  const myPosts = allPosts && allPosts.length > 0 ? allPosts.slice(0, 9) : [];
+  
+  // 2. Saved Posts 
   const displayedPosts = activeTab === 'saved' ? savedPosts : myPosts;
 
   useLayoutEffect(() => {
@@ -73,9 +78,9 @@ const ProfileSection = ({ user, savedPosts, allPosts, theme }) => {
         </div>
 
         <div className={`profile-anim flex items-center justify-around md:justify-start md:gap-20 mt-8 p-6 rounded-2xl border backdrop-blur-md ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200 shadow-lg'}`}>
-            <StatItem count={user.stats.posts} label="Posts" theme={isDark} />
-            <StatItem count={user.stats.followers} label="Followers" theme={isDark} />
-            <StatItem count={user.stats.following} label="Following" theme={isDark} />
+            <StatItem count={user.stats?.posts || 0} label="Posts" theme={isDark} />
+            <StatItem count={user.stats?.followers || 0} label="Followers" theme={isDark} />
+            <StatItem count={user.stats?.following || 0} label="Following" theme={isDark} />
         </div>
       </div>
 
@@ -90,7 +95,7 @@ const ProfileSection = ({ user, savedPosts, allPosts, theme }) => {
 
       {/* Grid Content */}
       <div className="profile-anim grid grid-cols-3 gap-1 md:gap-6 mt-6 px-1 md:px-12 mb-20">
-        {displayedPosts.length > 0 ? (
+        {displayedPosts && displayedPosts.length > 0 ? (
             displayedPosts.map((post) => (
                 <div key={post.id} onClick={() => openPost(post)} className="group relative aspect-square rounded-lg md:rounded-2xl bg-slate-800 cursor-pointer overflow-hidden shadow-lg">
                     <img src={post.postImage} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -116,7 +121,7 @@ const ProfileSection = ({ user, savedPosts, allPosts, theme }) => {
   );
 };
 
-// Sub-components for Profile
+// Sub-components
 const StatItem = ({ count, label, theme }) => (
     <div className="flex flex-col items-center md:items-start">
         <span className={`text-xl font-bold ${theme ? 'text-white' : 'text-black'}`}>{count}</span>

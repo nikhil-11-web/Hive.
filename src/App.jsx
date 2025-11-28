@@ -19,7 +19,8 @@ import MoreSection from "./components/MoreSection";
 import ReelSection from "./components/ReelSection"; 
 import AboutHive from "./components/AboutHive"; 
 
-// --- FIXED DATA IMPORTS (Use lowercase 'data' folder) ---
+// --- FIXED DATA IMPORTS ---
+// Ensure the files in your /src/data/ folder are actually named 'currentUser.js' and 'posts.js'
 import { currentUser } from "./data/currentUser.js";
 import { postsData } from "./data/posts.js";
 
@@ -133,7 +134,7 @@ function App() {
             theme={theme} 
             savedPosts={savedPosts} 
             user={currentUser} 
-            allPosts={postsdata} 
+            allPosts={postsData}  /* ✅ FIXED: Changed postsdata to postsData */
           />
         )}
 
@@ -169,4 +170,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
